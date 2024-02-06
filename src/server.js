@@ -16,6 +16,7 @@ const express = require("express");
 const fs = require("fs");
 const { getWeatherData } = require("./api");
 const { saveDatatoFile } = require("./saveData");
+const path = require("path");
 
 /********************************************************
  * Instantiation
@@ -25,7 +26,7 @@ const date = new Date();
 const app = express();
 
 const port = 3000;
-const path = "./src/weatherData.json";
+const jsonPath = "./src/weatherData.json";
 
 /*********************************************************
  * Functions
@@ -45,6 +46,15 @@ function isEmpty(array) {
 /**********************************************************
  * Backend Code
  */
+
+app.set("view engine", "ejs");
+
+// Define the directory where your HTML files (views) are located
+app.set("views", path.join(__dirname, "views"));
+
+// Optionally, you can define a static files directory (CSS, JS, images, etc.)
+app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", async (req, res) => {
   // Saves the Data into a additionall variable, saves some Values to own variables
   let data = await getWeatherData();
@@ -72,7 +82,7 @@ app.get("/", async (req, res) => {
   // Speichert den aktuellen Monat in einer Variable
   const currentMonth = date.getMonth() + 1;
   // Speichert die JSON-Daten in einer Variable
-  const dataFromFile = fs.readFileSync(path, "utf8");
+  const dataFromFile = fs.readFileSync(jsonPath, "utf8");
   // Erstellt ein JS-Objekt aus dem JSON Objekt
   const parsedData = JSON.parse(dataFromFile);
   // Sucht nach dem Monat im JSON Objekt und gibt die Wetterdaten des Tages zurück
@@ -108,9 +118,9 @@ app.get("/", async (req, res) => {
       }
     }
 
-    saveDatatoFile(path, parsedData);
+    saveDatatoFile(jsonPath, parsedData);
 
-    res.sendFile(__dirname + "/website/index.html");
+    res.render("index", { data: summeryWeather });
   }
 });
 
