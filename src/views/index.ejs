@@ -7,12 +7,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <ul>
-      <li>Temperature: <%= data.temp %> °C</li>
-      <li>Humidity: <%= data.humidity %> %</li>
-      <li>Weather: <%= data.weather %></li>
-      <li>Sunrise: <%= data.sunrise %></li>
-      <li>Sunset: <%= data.sunset %></li>
-    </ul>
+    <div class="links">
+      <a href="/statistics"> <strong>Statistics</strong></a>
+    </div>
+    <div class="temp"><p>Temperature: <%= data.temp %> °C</p></div>
+    <div class="humidity"><p>Humidity: <%= data.humidity %> %</p></div>
+    <div class="Weather"><p>Weather: <%= data.weather %></p></div>
+    <div class="Sunrise"><p>Sunrise: <%= data.sunrise %></p></div>
+    <div class="Sunset"><p>Sunset: <%= data.sunset %></p></div>
   </body>
 </html>

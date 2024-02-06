@@ -70,8 +70,8 @@ app.get("/", async (req, res) => {
     temp: Math.round((temp - 273.15) * 100) / 100,
     humidity: humidity,
     weather: weather,
-    sunrise: sunrise,
-    sunset: sunset,
+    sunrise: sunrise.toLocaleTimeString(),
+    sunset: sunset.toLocaleTimeString(),
   };
   let dailyConditions = {
     temp: Math.round((temp - 273.15) * 100) / 100,
@@ -112,7 +112,7 @@ app.get("/", async (req, res) => {
       parsedData[currentMonth] = [dailyConditions];
     }
 
-    for (let i = 1; i < 12; i++) {
+    for (let i = 1; i < 13; i++) {
       if (i !== currentMonth) {
         delete parsedData[i];
       }
@@ -120,8 +120,12 @@ app.get("/", async (req, res) => {
 
     saveDatatoFile(jsonPath, parsedData);
 
-    res.render("index", { data: summeryWeather });
+    res.render("index.ejs", { data: summeryWeather });
   }
+});
+
+app.get("/statistics", (req, res) => {
+  res.render("statistics.ejs");
 });
 
 app.listen(port, () => {
