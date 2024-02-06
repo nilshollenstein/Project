@@ -109,7 +109,8 @@ app.get("/", async (req, res) => {
     }
 
     saveDatatoFile(path, parsedData);
-    res.send(JSON.stringify(summeryWeather));
+
+    res.sendFile(__dirname + "/website/index.html");
   }
 });
 
