@@ -26,7 +26,9 @@ const date = new Date();
 const app = express();
 
 const port = 3000;
-const jsonPath = "./src/weatherData.json";
+const jsonPathDailyData = "./src/weatherData.json";
+let url =
+  "https://api.openweathermap.org/data/2.5/weather?lat=47&lon=8&appid=682fbde19d8e67b978559f90bac20fcf";
 
 /*********************************************************
  * Functions
@@ -47,6 +49,8 @@ function isEmpty(array) {
  * Backend Code
  */
 
+app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 
 // Define the directory where your HTML files (views) are located
@@ -55,9 +59,27 @@ app.set("views", path.join(__dirname, "views"));
 // Optionally, you can define a static files directory (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, "public")));
 
+app.post("/", (req, res) => {
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
+  console.log(latitude + " " + longitude);
+  const coordinates = {
+    latitude: latitude,
+    longitude: longitude,
+  };
+  saveDatatoFile("./src/lat_long.json", coordinates);
+  res.redirect("/");
+});
 app.get("/", async (req, res) => {
+  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
+  let lat = lat_long.latitude;
+  let long = lat_long.longitude;
+  if (lat && long) {
+    url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=682fbde19d8e67b978559f90bac20fcf`;
+  }
   // Saves the Data into a additionall variable, saves some Values to own variables
-  let data = await getWeatherData();
+  let data = await getWeatherData(url);
   let temp = data.main.temp;
   let humidity = data.main.humidity;
   // [0] Because data.weather is an Array,
@@ -82,7 +104,7 @@ app.get("/", async (req, res) => {
   // Speichert den aktuellen Monat in einer Variable
   const currentMonth = date.getMonth() + 1;
   // Speichert die JSON-Daten in einer Variable
-  const dataFromFile = fs.readFileSync(jsonPath, "utf8");
+  const dataFromFile = fs.readFileSync(jsonPathDailyData, "utf8");
   // Erstellt ein JS-Objekt aus dem JSON Objekt
   const parsedData = JSON.parse(dataFromFile);
   // Sucht nach dem Monat im JSON Objekt und gibt die Wetterdaten des Tages zurück
@@ -118,10 +140,9 @@ app.get("/", async (req, res) => {
       }
     }
 
-    saveDatatoFile(jsonPath, parsedData);
-
-    res.render("index.ejs", { data: summeryWeather });
+    saveDatatoFile(jsonPathDailyData, parsedData);
   }
+  res.render("index.ejs", { data: summeryWeather });
 });
 
 app.get("/statistics", (req, res) => {

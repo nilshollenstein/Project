@@ -4,7 +4,8 @@
   "description": "Website for weather data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon  src/server.js",
+    "run": "node src/server.js"
   },
   "author": "Nils Hollenstein",
   "license": "ISC",
