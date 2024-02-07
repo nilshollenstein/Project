@@ -69,38 +69,18 @@ app.post("/", (req, res) => {
     longitude: longitude,
   };
   saveDatatoFile("./src/lat_long.json", coordinates);
-  res.redirect("/");
+  res.redirect("/overview");
 });
 app.get("/", async (req, res) => {
-  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
-  let lat = lat_long.latitude;
-  let long = lat_long.longitude;
-  if (lat && long) {
-    url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=682fbde19d8e67b978559f90bac20fcf`;
-  }
-  // Saves the Data into a additionall variable, saves some Values to own variables
   let data = await getWeatherData(url);
   let temp = data.main.temp;
   let humidity = data.main.humidity;
-  // [0] Because data.weather is an Array,
-  let weather = data.weather[0].main;
-  // Quelle: https://sentry.io/answers/convert-unix-timestamp-to-date-and-time-in-javascript/
-  let sunrise = new Date(data.sys.sunrise * 1000);
-  let sunset = new Date(data.sys.sunset * 1000);
 
-  summeryWeather = {
-    temp: Math.round((temp - 273.15) * 100) / 100,
-    humidity: humidity,
-    weather: weather,
-    sunrise: sunrise.toLocaleTimeString(),
-    sunset: sunset.toLocaleTimeString(),
-  };
   let dailyConditions = {
     temp: Math.round((temp - 273.15) * 100) / 100,
     humidity: humidity,
     day: date.getDate(),
   };
-
   // Speichert den aktuellen Monat in einer Variable
   const currentMonth = date.getMonth() + 1;
   // Speichert die JSON-Daten in einer Variable
@@ -139,10 +119,36 @@ app.get("/", async (req, res) => {
         delete parsedData[i];
       }
     }
-
-    saveDatatoFile(jsonPathDailyData, parsedData);
   }
-  res.render("index.ejs", { data: summeryWeather });
+  saveDatatoFile(jsonPathDailyData, parsedData);
+  res.render("index.ejs");
+});
+app.get("/overview", async (req, res) => {
+  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
+  let lat = lat_long.latitude;
+  let long = lat_long.longitude;
+  if (lat && long) {
+    url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=682fbde19d8e67b978559f90bac20fcf`;
+  }
+  // Saves the Data into a additionall variable, saves some Values to own variables
+  let data = await getWeatherData(url);
+  let temp = data.main.temp;
+  let humidity = data.main.humidity;
+  // [0] Because data.weather is an Array,
+  let weather = data.weather[0].main;
+  // Quelle: https://sentry.io/answers/convert-unix-timestamp-to-date-and-time-in-javascript/
+  let sunrise = new Date(data.sys.sunrise * 1000);
+  let sunset = new Date(data.sys.sunset * 1000);
+
+  summeryWeather = {
+    temp: Math.round((temp - 273.15) * 100) / 100,
+    humidity: humidity,
+    weather: weather,
+    sunrise: sunrise.toLocaleTimeString(),
+    sunset: sunset.toLocaleTimeString(),
+  };
+
+  res.render("overview.ejs", { data: summeryWeather });
 });
 
 app.get("/statistics", (req, res) => {

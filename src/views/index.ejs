@@ -4,56 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style_index.css" />
   </head>
+  <header>
+    <a href="/overview" class="start"> <strong>Overview</strong></a>
+    <a href="/statistics" class="statistics"> <strong>Statistics</strong></a>
+  </header>
   <body>
-    <div class="links">
-      <a href="/statistics"> <strong>Statistics</strong></a>
-    </div>
-
     <div class="changeLocation">
-      <form action="/" method="post">
-        <label for="latitude">Latitude</label><br />
-        <input type="text" id="latitude" name="latitude" /><br />
-        <label for="longitude">Longitude</label><br />
-        <input type="text" id="longitude" name="longitude" />
-        <input type="submit" value="Submit" /><br />
+      <form
+        action="/"
+        method="post"
+        style="display: flex; flex-direction: column"
+      >
+        <div class="input" style="margin-bottom: 10px">
+          <label for="latitude">Latitude</label><br />
+          <input type="text" id="latitude" name="latitude" />
+        </div>
+        <div class="input">
+          <label for="longitude">Longitude</label><br />
+          <input type="text" id="longitude" name="longitude" /> <br />
+        </div>
+
+        <input type="submit" value="Submit" class="submitButton" />
       </form>
-    </div>
-
-    <div class="temp">
-      <img src="thermomether.png" />
-      <p>Temperature: <%= data.temp %> °C</p>
-    </div>
-    <div class="humidity">
-      <img src="waterdrop.png" />
-      <p>Humidity: <%= data.humidity %> %</p>
-    </div>
-    <div class="Weather">
-      <!--https://stackoverflow.com/questions/8216918/can-i-use-conditional-statements-with-ejs-templates-in-jmvc-->
-      <% if (data.weather === "Clear") { %>
-      <img src="/weatherIcons/sun.png" />
-      <% } else if (data.weather === "Rain") { %>
-      <img src="/weatherIcons/rain.png" />
-      <% } else if (data.weather === "Clouds") { %>
-      <img src="/weatherIcons/cloud.png" />
-      <% } else if (data.weather === "Snow") { %>
-      <img src="/weatherIcons/snow.png" />
-      <% } else if (data.weather === "Mist") { %>
-      <img src="/weatherIcons/mist.png" />
-      <% } else if (data.weather === "Thunderstorm") { %>
-      <img src="/weatherIcons/thunderstorm.png" />
-      <% } %>
-
-      <p>Weather: <%= data.weather %></p>
-    </div>
-    <div class="Sunrise">
-      <img src="sunrise.png" />
-      <p>Sunrise: <%= data.sunrise %></p>
-    </div>
-    <div class="Sunset">
-      <img src="sunset.png" />
-      <p>Sunset: <%= data.sunset %></p>
     </div>
   </body>
 </html>
