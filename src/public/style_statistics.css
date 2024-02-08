@@ -1,19 +1,12 @@
-img{
-	max-width: 60%;
-	max-height: 60%;
-	object-fit: contain;
-}
+
 body {
 	display: flex;
 	flex-direction: column;
 
 	margin: 0;
 	padding: 0;
+	
 }
-p{
-	font-size: 30px;
-}
-
 header {
 	display: flex;
 	justify-content: space-between;
@@ -22,35 +15,17 @@ header {
 	background-color: rgb(238, 238, 238);
 	position: sticky;
 	/*needed to keep the header at the top*/
-	top:0;
+	top: 0;
 }
-html{
+
+html {
 	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 }
-
-.row1,
-.row2,
-.row3 {
+.chart{
 	display: flex;
 	flex-wrap: wrap;
-	/* Alows elements to change to the next Line */
 	justify-content: space-around;
-	margin: 0;
-	height: auto;
-	/* Alows to automaticly change the hight */
-}
 
-/* Flex-Items */
-.row1>div,
-.row2>div,
-.row3>div {
-	display: flex;
-	flex: 1 1 auto;
-	/* Proporsional facort to let the elements grow or get smaller, auto is the basis */
-	flex-direction: column;
-	align-items: center;
-	min-height: 0;
-	/* alows the items to get smaller then they would be */
 }
 a:link,
 a:visited,

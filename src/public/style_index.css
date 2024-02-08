@@ -83,7 +83,8 @@ a:active {
 	color: black;
 	font-size: 200%;
 }
-a:hover{
+
+a:hover {
 
 	scale: 110%;
 	cursor: pointer;

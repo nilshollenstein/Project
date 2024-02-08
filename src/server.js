@@ -74,67 +74,54 @@ app.post("/", (req, res) => {
     longitude <= 180 &&
     longitude >= -180
   ) {
-    saveDatatoFile("./src/lat_long.json", coordinates);
+    saveDatatoFile("./src/jsonFiles/lat_long.json", coordinates);
   }
   res.redirect("/overview");
 });
 app.get("/", async (req, res) => {
-  let data = await getWeatherData(url);
-  let temp = data.main.temp;
-  let humidity = data.main.humidity;
-  let id = data.id;
-  let location = data.name;
+  // Saves the current month
 
-  let dailyConditions = {
-    temp: Math.round((temp - 273.15) * 100) / 100,
-    humidity: humidity,
-    id: id,
-    location: location,
-  };
-  // Speichert den aktuellen Monat in einer Variable
-  const currentMonth = date.getMonth() + 1;
-  // Speichert die JSON-Daten in einer Variable
-  const dataFromFile = fs.readFileSync(jsonPathDailyData, "utf8");
-  // Erstellt ein JS-Objekt aus dem JSON Objekt
-  const parsedData = JSON.parse(dataFromFile);
-  // Sucht nach dem Monat im JSON Objekt und gibt die Wetterdaten des Tages zurück
-  const currentMonthData = parsedData[currentMonth];
+  const coordinatesZurich = [47.37, 8.54];
+  const coordinatesNewYork = [40.42, 8.54];
+  const coordinatesTokyo = [35.68, 139.74];
+  const coordinatesDubai = [25.21, 55.27];
+  const coordinatesRioDeJaneiro = [-22.91, -43.23];
+  const coordinatesCapeTown = [-33.92, 18.42];
+  const coordinatesLondon = [51.5, -0.11];
+  const coordinatesShangHai = [31.23, 121.47];
+  const coordinatesMexicoCity = [19.43, -99.1389];
+  const coordinatesCities = [
+    coordinatesZurich,
+    coordinatesCapeTown,
+    coordinatesDubai,
+    coordinatesLondon,
+    coordinatesMexicoCity,
+    coordinatesNewYork,
+    coordinatesRioDeJaneiro,
+    coordinatesShangHai,
+    coordinatesTokyo,
+  ];
 
-  if (isEmpty(currentMonthData)) {
-    parsedData[currentMonth] = [dailyConditions];
-  } else {
-    // Information to findIndex from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex?retiredLocale=de
-    // Searches a specific Index in the Object, compares it with today
-    const existingLocationData = currentMonthData.findIndex(
-      // Schaut ob es einen Eintrag zum aktuellen Tag findet, wenn ja, kommt der index des ersten passenden Wertes zurück, sonst -1
-      (location) => location.id === dailyConditions.id
-    );
-
-    //Prüft ob Eintrag für aktuellen Monat enthalten
-    if (currentMonthData) {
-      if (existingLocationData !== -1) {
-        // Wenn es einen Eintrag gibt, fügt man ihn diesem hinzu(überschreibt den alten)
-        currentMonthData[existingLocationData] = dailyConditions;
-      } else {
-        // Fügt neuen eintrag Hinzu
-        currentMonthData.push(dailyConditions);
-      }
-    } else {
-      // Erstellt einen neuen Eintrag für den Monat und fügt die Dailyconditions an
-      parsedData[currentMonth] = [dailyConditions];
-    }
-
-    for (let i = 1; i < 13; i++) {
-      if (i !== currentMonth) {
-        delete parsedData[i];
-      }
-    }
+  let dataCity = [];
+  for (let i = 0; i < coordinatesCities.length; i++) {
+    let urlCities = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinatesCities[i][0]}&lon=${coordinatesCities[i][1]}&appid=682fbde19d8e67b978559f90bac20fcf`;
+    let dataCurrentCity = await getWeatherData(urlCities);
+    let temp = dataCurrentCity.main.temp;
+    let informationCity = {
+      temp: Math.round((temp - 273.15) * 100) / 100,
+      humidity: dataCurrentCity.main.humidity,
+      location: dataCurrentCity.name,
+    };
+    dataCity.push(informationCity);
   }
-  saveDatatoFile(jsonPathDailyData, parsedData);
+  saveDatatoFile("./src/public/cityData.json", dataCity);
+
   res.render("index.ejs");
 });
 app.get("/overview", async (req, res) => {
-  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
+  let lat_long = JSON.parse(
+    fs.readFileSync("./src/jsonFiles/lat_long.json", "utf8")
+  );
   let lat = lat_long.latitude;
   let long = lat_long.longitude;
 
@@ -166,6 +153,7 @@ app.get("/overview", async (req, res) => {
 
 app.get("/statistics", (req, res) => {
   res.render("statistics.ejs");
+  res.sendFile("cityData.json");
 });
 
 app.listen(port, () => {
