@@ -6,12 +6,16 @@
     <title>Document</title>
     <link rel="stylesheet" href="style_overview.css" />
   </head>
-  <header>
-    <a href="/" class="start"> <strong>Start</strong></a>
-    <a href="/statistics" class="statistics"> <strong>Statistics</strong></a>
-  </header>
+
   <body>
-    <div class="row1">
+    <header>
+      <a href="/" class="start"> <strong>Start</strong></a>
+
+      <a href="/statistics" class="statistics"> <strong>Statistics</strong></a>
+    </header>
+    <div class="row1"><h1><%= data.location %></h1></div>
+
+    <div class="row2">
       <div>
         <img src="thermomether.png" />
         <p>Temperature: <%= data.temp %> °C</p>
@@ -39,7 +43,7 @@
         <p>Weather: <%= data.weather %></p>
       </div>
     </div>
-    <div class="row2">
+    <div class="row3">
       <div class="Sunrise">
         <img src="sunrise.png" />
         <p>Sunrise: <%= data.sunrise %></p>

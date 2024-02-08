@@ -68,18 +68,28 @@ app.post("/", (req, res) => {
     latitude: latitude,
     longitude: longitude,
   };
-  saveDatatoFile("./src/lat_long.json", coordinates);
+  if (
+    latitude <= 90 &&
+    latitude >= -90 &&
+    longitude <= 180 &&
+    longitude >= -180
+  ) {
+    saveDatatoFile("./src/lat_long.json", coordinates);
+  }
   res.redirect("/overview");
 });
 app.get("/", async (req, res) => {
   let data = await getWeatherData(url);
   let temp = data.main.temp;
   let humidity = data.main.humidity;
+  let id = data.id;
+  let location = data.name;
 
   let dailyConditions = {
     temp: Math.round((temp - 273.15) * 100) / 100,
     humidity: humidity,
-    day: date.getDate(),
+    id: id,
+    location: location,
   };
   // Speichert den aktuellen Monat in einer Variable
   const currentMonth = date.getMonth() + 1;
@@ -95,16 +105,16 @@ app.get("/", async (req, res) => {
   } else {
     // Information to findIndex from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex?retiredLocale=de
     // Searches a specific Index in the Object, compares it with today
-    const existingEntryDay = currentMonthData.findIndex(
+    const existingLocationData = currentMonthData.findIndex(
       // Schaut ob es einen Eintrag zum aktuellen Tag findet, wenn ja, kommt der index des ersten passenden Wertes zurück, sonst -1
-      (day) => day.day === dailyConditions.day
+      (location) => location.id === dailyConditions.id
     );
 
     //Prüft ob Eintrag für aktuellen Monat enthalten
     if (currentMonthData) {
-      if (existingEntryDay !== -1) {
+      if (existingLocationData !== -1) {
         // Wenn es einen Eintrag gibt, fügt man ihn diesem hinzu(überschreibt den alten)
-        currentMonthData[existingEntryDay] = dailyConditions;
+        currentMonthData[existingLocationData] = dailyConditions;
       } else {
         // Fügt neuen eintrag Hinzu
         currentMonthData.push(dailyConditions);
@@ -127,6 +137,7 @@ app.get("/overview", async (req, res) => {
   let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
   let lat = lat_long.latitude;
   let long = lat_long.longitude;
+
   if (lat && long) {
     url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=682fbde19d8e67b978559f90bac20fcf`;
   }
@@ -139,6 +150,7 @@ app.get("/overview", async (req, res) => {
   // Quelle: https://sentry.io/answers/convert-unix-timestamp-to-date-and-time-in-javascript/
   let sunrise = new Date(data.sys.sunrise * 1000);
   let sunset = new Date(data.sys.sunset * 1000);
+  let location = data.name;
 
   summeryWeather = {
     temp: Math.round((temp - 273.15) * 100) / 100,
@@ -146,6 +158,7 @@ app.get("/overview", async (req, res) => {
     weather: weather,
     sunrise: sunrise.toLocaleTimeString(),
     sunset: sunset.toLocaleTimeString(),
+    location: location,
   };
 
   res.render("overview.ejs", { data: summeryWeather });
