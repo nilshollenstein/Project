@@ -66,13 +66,13 @@ app.post("/", (req, res) => {
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
 
-  console.log(latitude + " " + longitude);
   const coordinates = {
     latitude: parseFloat(latitude),
     longitude: parseFloat(longitude),
   };
   console.log(typeof coordinates.latitude);
   console.log(typeof coordinates.longitude);
+
   if (
     coordinates.latitude <= 90 &&
     coordinates.latitude >= -90 &&
