@@ -1,6 +1,8 @@
+// Fetching data from the specified JSON file
 fetch("./cityData.json")
   .then((res) => {
-    //If, damit  die Funktion nur ausgeführt wird wenn der Request erfolgreich war
+    //https://www.freecodecamp.org/news/how-to-read-json-file-in-javascript/
+    // Check if the network response is successful
     if (!res.ok) {
       console.error("Network response was not ok");
       return;
@@ -10,28 +12,17 @@ fetch("./cityData.json")
 
   .then((data) => {
     console.log(data);
-    //https://www.chartjs.org/docs/latest/charts/bar.html
-    // Canvas wird ausgewählt, um darauf etwas in 2d zu zeichnen
+    // Selecting the canvas to draw on it in 2D
     var ctx = document.getElementById("myChart1").getContext("2d");
-    // Erstellt neuen  Chart mit den Daten aus cityData.json und dem Context von myChart
+    // Creating a new chart with data from cityData.json and the context of myChart
     var myChart1 = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: [
-          "Zurich",
-          "Cape Town",
-          "Dubai",
-          "London",
-          "Mexico  City",
-          "New York",
-          "Rio de Janeiro",
-          "Shanghai",
-          "Tokyo",
-        ],
+        labels: data.map((item) => item.location),
         datasets: [
           {
             label: "Temperature in °C",
-            /*Es werden die Temperaturen in einem Array gespeichert*/
+            // Storing temperatures in an array
             data: data.map((item) => item.temp),
             backgroundColor: [
               "rgba(255,  99,  132,  0.2)",
@@ -67,27 +58,17 @@ fetch("./cityData.json")
         },
       },
     });
-    // Canvas wird ausgewählt, um darauf etwas in 2d zu zeichnen
+    // Selecting the canvas to draw on it in 2D
     var ctx = document.getElementById("myChart2").getContext("2d");
-    // Erstellt neuen  Chart mit den Daten aus cityData.json und dem Context von myChart
+    // Creating a new chart with data from cityData.json and the context of myChart
     var myChart2 = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: [
-          "Zurich",
-          "Cape Town",
-          "Dubai",
-          "London",
-          "Mexico  City",
-          "New York",
-          "Rio de Janeiro",
-          "Shanghai",
-          "Tokyo",
-        ],
+        labels: data.map((item) => item.location),
         datasets: [
           {
             label: "Humidity in %",
-            /*Es werden die Temperaturen in einem Array gespeichert*/
+            // Storing humidity in an array
             data: data.map((item) => item.humidity),
             backgroundColor: [
               "rgba(255,  99,  132,  0.2)",

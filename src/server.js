@@ -25,6 +25,8 @@ const path = require("path");
 const date = new Date();
 const app = express();
 
+let errorStatus = null;
+
 const port = 3000;
 const jsonPathDailyData = "./src/weatherData.json";
 let url =
@@ -69,18 +71,21 @@ app.post("/", (req, res) => {
     longitude: longitude,
   };
   if (
-    latitude <= 90 &&
-    latitude >= -90 &&
-    longitude <= 180 &&
-    longitude >= -180
+    latitude >= 90 ||
+    latitude >= -90 ||
+    longitude >= 180 ||
+    longitude <= -180 ||
+    typeof latitude === "string" ||
+    typeof longitude === "string"
   ) {
-    saveDatatoFile("./src/jsonFiles/lat_long.json", coordinates);
+    errorStatus = "Ungültige Koordinaten oder falscher Datentyp.";
+    res.redirect("/");
+  } else {
+    errorStatus = null;
+    res.redirect("/overview");
   }
-  res.redirect("/overview");
 });
 app.get("/", async (req, res) => {
-  // Saves the current month
-
   const coordinatesZurich = [47.37, 8.54];
   const coordinatesNewYork = [40.42, 8.54];
   const coordinatesTokyo = [35.68, 139.74];
@@ -116,12 +121,10 @@ app.get("/", async (req, res) => {
   }
   saveDatatoFile("./src/public/cityData.json", dataCity);
 
-  res.render("index.ejs");
+  res.render("index.ejs", { errorStatus: errorStatus });
 });
 app.get("/overview", async (req, res) => {
-  let lat_long = JSON.parse(
-    fs.readFileSync("./src/jsonFiles/lat_long.json", "utf8")
-  );
+  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
   let lat = lat_long.latitude;
   let long = lat_long.longitude;
 

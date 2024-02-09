@@ -89,3 +89,9 @@ a:hover {
 	scale: 110%;
 	cursor: pointer;
 }
+.errorMessage{
+	align-self: center;
+	margin-top: 20%;
+	scale: 150%;
+	
+}
