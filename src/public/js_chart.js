@@ -1,4 +1,15 @@
-// Fetching data from the specified JSON file
+let correctLocationName = [
+  "Zurich",
+  "Cape Town",
+  "Dubai",
+  "London",
+  "Mexico City",
+  "New York",
+  "Rio de Janeiro",
+  "Shang Hai",
+  "Tokyo",
+];
+// Geting data from the specified JSON file
 fetch("./cityData.json")
   .then((res) => {
     //https://www.freecodecamp.org/news/how-to-read-json-file-in-javascript/
@@ -12,29 +23,33 @@ fetch("./cityData.json")
 
   .then((data) => {
     console.log(data);
+    let locationsList = data.map((item) => item.location);
+    for (let i = 0; i < locationsList.length; i++) {
+      locationsList[i] = correctLocationName[i];
+    }
     // Selecting the canvas to draw on it in 2D
     var ctx = document.getElementById("myChart1").getContext("2d");
     // Creating a new chart with data from cityData.json and the context of myChart
     var myChart1 = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: data.map((item) => item.location),
+        labels: locationsList,
         datasets: [
           {
             label: "Temperature in °C",
-            // Storing temperatures in an array
+            // Storing temperatures in a new array
             data: data.map((item) => item.temp),
             backgroundColor: [
-              "rgba(255,  99,  132,  0.2)",
-              "rgba(54,  162,  235,  0.2)",
-              "rgba(255,  206,  86,  0.2)",
-              "rgba(75,  192,  192,  0.2)",
+              "rgba(192, 192, 232, 0.3)",
+              "rgba(150, 150, 190, 0.3)",
+              "rgba(128, 128, 168, 0.3)",
+              "rgba(100, 100, 140, 0.3)",
             ],
             borderColor: [
-              "rgba(255,  99,  132,  1)",
-              "rgba(54,  162,  235,  1)",
-              "rgba(255,  206,  86,  1)",
-              "rgba(75,  192,  192,  1)",
+              "rgba(192, 192, 232, 1)",
+              "rgba(150, 150, 190, 1)",
+              "rgba(128, 128, 168, 1)",
+              "rgba(100, 100, 140, 1)",
             ],
             borderWidth: 1,
           },
@@ -64,23 +79,23 @@ fetch("./cityData.json")
     var myChart2 = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: data.map((item) => item.location),
+        labels: locationsList,
         datasets: [
           {
             label: "Humidity in %",
             // Storing humidity in an array
             data: data.map((item) => item.humidity),
             backgroundColor: [
-              "rgba(255,  99,  132,  0.2)",
-              "rgba(54,  162,  235,  0.2)",
-              "rgba(255,  206,  86,  0.2)",
-              "rgba(75,  192,  192,  0.2)",
+              "rgba(192, 192, 232, 0.3)",
+              "rgba(150, 150, 190, 0.3)",
+              "rgba(128, 128, 168, 0.3)",
+              "rgba(100, 100, 140, 0.3)",
             ],
             borderColor: [
-              "rgba(255,  99,  132,  1)",
-              "rgba(54,  162,  235,  1)",
-              "rgba(255,  206,  86,  1)",
-              "rgba(75,  192,  192,  1)",
+              "rgba(192, 192, 232, 1)",
+              "rgba(150, 150, 190, 1)",
+              "rgba(128, 128, 168, 1)",
+              "rgba(100, 100, 140, 1)",
             ],
             borderWidth: 1,
           },

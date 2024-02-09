@@ -1,31 +1,23 @@
-
+html {
+	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+	height: 100vh;
+}
 body {
 	display: flex;
 	flex-direction: column;
-
 	margin: 0;
 	padding: 0;
-	
+	height: 100vh;
 }
+
 header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 5%;
+	padding: 4%;
 	background-color: rgb(238, 238, 238);
 	position: sticky;
-	/*needed to keep the header at the top*/
 	top: 0;
-}
-
-html {
-	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-}
-.chart{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-
 }
 a:link,
 a:visited,
@@ -40,4 +32,54 @@ a:hover {
 
 	scale: 110%;
 	cursor: pointer;
+}
+
+
+.charts {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.myChart1,
+.myChart2 {
+	width: 100%;
+	max-width: 100vh;
+	height: 150%;
+	display: flex;
+	align-items: center;
+}
+
+.myChart1 {
+	margin-top: 5%;
+}
+
+.myChart2 {
+	margin-bottom: 5%;
+}
+canvas {
+	max-width: 100%;
+	height: 45vh;
+
+}
+
+
+@media only screen and (min-width: 600px) {
+
+	.myChart1,
+	.myChart2 {
+		width: 80%;
+		height: 50vh;
+		/* Ändere dies auf die gewünschte Höhe */
+	}
+
+	canvas {
+		height: 100%;
+	}
+
+	html,
+	body {
+		height: 100%;
+	}
 }

@@ -17,6 +17,7 @@ const fs = require("fs");
 const { getWeatherData } = require("./api");
 const { saveDatatoFile } = require("./saveData");
 const path = require("path");
+const { type } = require("os");
 
 /********************************************************
  * Instantiation
@@ -67,23 +68,30 @@ app.post("/", (req, res) => {
 
   console.log(latitude + " " + longitude);
   const coordinates = {
-    latitude: latitude,
-    longitude: longitude,
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
   };
+  console.log(typeof coordinates.latitude);
+  console.log(typeof coordinates.longitude);
   if (
-    latitude >= 90 ||
-    latitude >= -90 ||
-    longitude >= 180 ||
-    longitude <= -180 ||
-    typeof latitude === "string" ||
-    typeof longitude === "string"
+    coordinates.latitude <= 90 &&
+    coordinates.latitude >= -90 &&
+    coordinates.longitude <= 180 &&
+    coordinates.longitude >= -180
   ) {
-    errorStatus = "Ungültige Koordinaten oder falscher Datentyp.";
-    res.redirect("/");
-  } else {
     errorStatus = null;
     res.redirect("/overview");
+  } else if (
+    typeof coordinates.latitude !== "number" ||
+    typeof coordinates.longitude !== "number"
+  ) {
+    errorStatus = "Invalid data type";
+    res.redirect("/");
+  } else {
+    errorStatus = "Invalid coordinates";
+    res.redirect("/");
   }
+  saveDatatoFile("./src/lat_long.json", coordinates);
 });
 app.get("/", async (req, res) => {
   const coordinatesZurich = [47.37, 8.54];
@@ -131,12 +139,15 @@ app.get("/overview", async (req, res) => {
   if (lat && long) {
     url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=682fbde19d8e67b978559f90bac20fcf`;
   }
+
   // Saves the Data into a additionall variable, saves some Values to own variables
   let data = await getWeatherData(url);
+
   let temp = data.main.temp;
   let humidity = data.main.humidity;
   // [0] Because data.weather is an Array,
   let weather = data.weather[0].main;
+  console.log(weather);
   // Quelle: https://sentry.io/answers/convert-unix-timestamp-to-date-and-time-in-javascript/
   let sunrise = new Date(data.sys.sunrise * 1000);
   let sunset = new Date(data.sys.sunset * 1000);
@@ -156,9 +167,11 @@ app.get("/overview", async (req, res) => {
 
 app.get("/statistics", (req, res) => {
   res.render("statistics.ejs");
-  res.sendFile("cityData.json");
 });
-
+app.get("/statistics", (req, res) => {
+  res.sendFile(__dirname + "/public/cityData.json");
+  res.redirect("/statistics");
+});
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

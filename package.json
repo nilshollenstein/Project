@@ -4,8 +4,8 @@
   "description": "Website for weather data",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon  src/server.js",
-    "run": "node src/server.js"
+    "run": "node src/server.js",
+    "test": "nodemon  src/server.js"
   },
   "author": "Nils Hollenstein",
   "license": "ISC",
