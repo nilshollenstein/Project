@@ -3,6 +3,7 @@ body {
 	flex-direction: column;
 	margin: 0;
 	padding: 0;
+	
 }
 
 header {
@@ -17,6 +18,12 @@ header {
 html {
 	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 } 
+.welcomeText {
+	align-self: center;
+	font-size: 1.3vh;
+	text-wrap: wrap;
+	margin-top: 3%;
+}
 .changeLocation {
 	justify-content: center;
 	flex-direction: column;
@@ -32,7 +39,7 @@ div {
 form {
 	display: flex;
 	flex-direction: row;
-	/* Änderung: Eingabefelder nebeneinander */
+	
 }
 
 .input {
@@ -41,7 +48,7 @@ form {
 	align-items: center;
 	text-align: center;
 	
-	/* Änderung: Abstand zwischen den Eingabefeldern */
+	
 }
 .input input {
 	width: 70%;

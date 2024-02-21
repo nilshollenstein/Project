@@ -1,1 +1,52 @@
-[{"temp":10.09,"humidity":66,"location":"Zürich (Kreis 1)"},{"temp":23.22,"humidity":60,"location":"Cape Town"},{"temp":22.03,"humidity":55,"location":"Ash Shindaghah"},{"temp":9.98,"humidity":92,"location":"City of Westminster"},{"temp":11.72,"humidity":52,"location":"Mexico City"},{"temp":16.16,"humidity":49,"location":"Monteleone Rocca Doria"},{"temp":25.37,"humidity":88,"location":"São Cristóvão"},{"temp":4.22,"humidity":93,"location":"Shanghai Municipality"},{"temp":8.14,"humidity":88,"location":"Ichibanchō"}]
+[
+	{
+		"temp": 11.75,
+		"humidity": 56,
+		"location": "Zürich (Kreis 1) / Lindenhof"
+	},
+	{
+		"temp": 21.98,
+		"humidity": 52,
+		"location": "Cape Town"
+	},
+	{
+		"temp": 22.92,
+		"humidity": 49,
+		"location": "Ash Shindaghah"
+	},
+	{
+		"temp": 11,
+		"humidity": 92,
+		"location": "Lambeth"
+	},
+	{
+		"temp": 13.58,
+		"humidity": 41,
+		"location": "Mexico City"
+	},
+	{
+		"temp": 15.16,
+		"humidity": 56,
+		"location": "Monteleone Rocca Doria"
+	},
+	{
+		"temp": 28.95,
+		"humidity": 84,
+		"location": "São Cristóvão"
+	},
+	{
+		"temp": 3.92,
+		"humidity": 93,
+		"location": "Shanghai Municipality"
+	},
+	{
+		"temp": 8.09,
+		"humidity": 90,
+		"location": "Ichibanchō"
+	},
+	{
+		"temp": 28.15,
+		"humidity": 76,
+		"location": "Globe"
+	}
+]

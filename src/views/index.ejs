@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="style_index.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <header>
-    <a href="/overview" class="start"> <strong>Overview</strong></a>
-    <a href="/statistics" class="statistics"> <strong>Statistics</strong></a>
-  </header>
+
   <body>
+    <header>
+      <a href="/overview" class="start"> <strong>Overview</strong></a>
+      <a href="/statistics" class="statistics"> <strong>Statistics</strong></a>
+    </header>
+    <div class="welcomeText">
+      <h2>
+        Welcome to the most accurate weather website you will find. To use it,
+        enter the coordinates of the location you want to check
+      </h2>
+    </div>
+
     <div class="changeLocation">
       <form
         action="/"
@@ -19,11 +27,11 @@
         style="display: flex; flex-direction: column"
       >
         <div class="input" style="margin-bottom: 10px">
-          <label for="latitude">Latitude</label><br />
+          <label for="latitude">Latitude of your wish location</label><br />
           <input type="text" id="latitude" name="latitude" />
         </div>
         <div class="input">
-          <label for="longitude">Longitude</label><br />
+          <label for="longitude">Longitude of your wish location</label><br />
           <input type="text" id="longitude" name="longitude" /> <br />
         </div>
 

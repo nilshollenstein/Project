@@ -23,7 +23,7 @@ const { type } = require("os");
  * Instantiation
  */
 // Für das aktuelle Datum
-const date = new Date();
+
 const app = express();
 
 let errorStatus;
@@ -47,6 +47,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.post("/", (req, res) => {
+  errorStatus = null;
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
 
@@ -54,8 +55,6 @@ app.post("/", (req, res) => {
     latitude: parseFloat(latitude),
     longitude: parseFloat(longitude),
   };
-  console.log(typeof coordinates.latitude);
-  console.log(typeof coordinates.longitude);
 
   if (
     coordinates.latitude <= 90 &&
@@ -71,49 +70,45 @@ app.post("/", (req, res) => {
     errorStatus = "Invalid Coordinates";
     res.render("index.ejs", { errorStatus: errorStatus });
   }
+
+  saveDatatoFile("./src/json/lat_long.json", coordinates);
+});
+app.post("/statistics", (req, res) => {
   errorStatus = null;
-  saveDatatoFile("./src/lat_long.json", coordinates);
+  const latitude = req.body.latitudeNewLocation;
+  const longitude = req.body.longitudeNewLocation;
+
+  const coordinatesNewLocation = {
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
+  };
+
+  if (
+    coordinatesNewLocation.latitude <= 90 &&
+    coordinatesNewLocation.latitude >= -90 &&
+    coordinatesNewLocation.longitude <= 180 &&
+    coordinatesNewLocation.longitude >= -180 &&
+    typeof coordinatesNewLocation.latitude === "number" &&
+    typeof coordinatesNewLocation.longitude === "number"
+  ) {
+    errorStatus = "";
+    saveDatatoFile(
+      "./src/json/coordinatesNewLocation.json",
+      coordinatesNewLocation
+    );
+    res.redirect("statistics");
+  } else {
+    errorStatus = "Invalid Coordinates";
+    res.redirect("statistics");
+  }
 });
 app.get("/", async (req, res) => {
-  const coordinatesZurich = [47.37, 8.54];
-  const coordinatesNewYork = [40.42, 8.54];
-  const coordinatesTokyo = [35.68, 139.74];
-  const coordinatesDubai = [25.21, 55.27];
-  const coordinatesRioDeJaneiro = [-22.91, -43.23];
-  const coordinatesCapeTown = [-33.92, 18.42];
-  const coordinatesLondon = [51.5, -0.11];
-  const coordinatesShangHai = [31.23, 121.47];
-  const coordinatesMexicoCity = [19.43, -99.1389];
-  const coordinatesCities = [
-    coordinatesZurich,
-    coordinatesCapeTown,
-    coordinatesDubai,
-    coordinatesLondon,
-    coordinatesMexicoCity,
-    coordinatesNewYork,
-    coordinatesRioDeJaneiro,
-    coordinatesShangHai,
-    coordinatesTokyo,
-  ];
-
-  let dataCity = [];
-  for (let i = 0; i < coordinatesCities.length; i++) {
-    let urlCities = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinatesCities[i][0]}&lon=${coordinatesCities[i][1]}&appid=682fbde19d8e67b978559f90bac20fcf`;
-    let dataCurrentCity = await getWeatherData(urlCities);
-    let temp = dataCurrentCity.main.temp;
-    let informationCity = {
-      temp: Math.round((temp - 273.15) * 100) / 100,
-      humidity: dataCurrentCity.main.humidity,
-      location: dataCurrentCity.name,
-    };
-    dataCity.push(informationCity);
-  }
-  saveDatatoFile("./src/public/cityData.json", dataCity);
-
   res.render("index.ejs", { errorStatus: errorStatus });
 });
 app.get("/overview", async (req, res) => {
-  let lat_long = JSON.parse(fs.readFileSync("./src/lat_long.json", "utf8"));
+  let lat_long = JSON.parse(
+    fs.readFileSync("./src/json/lat_long.json", "utf8")
+  );
   let lat = lat_long.latitude;
   let long = lat_long.longitude;
 
@@ -128,7 +123,7 @@ app.get("/overview", async (req, res) => {
   let humidity = data.main.humidity;
   // [0] Because data.weather is an Array,
   let weather = data.weather[0].main;
-  console.log(weather);
+
   // Quelle: https://sentry.io/answers/convert-unix-timestamp-to-date-and-time-in-javascript/
   let sunrise = new Date(data.sys.sunrise * 1000);
   let sunset = new Date(data.sys.sunset * 1000);
@@ -146,8 +141,56 @@ app.get("/overview", async (req, res) => {
   res.render("overview.ejs", { data: summeryWeather });
 });
 
-app.get("/statistics", (req, res) => {
-  res.render("statistics.ejs");
+app.get("/statistics", async (req, res) => {
+  let coordinatesUser = JSON.parse(
+    fs.readFileSync("./src/json/coordinatesNewLocation.json", "utf8")
+  );
+  if (!coordinatesUser[0] || !coordinatesUser[1]) {
+    coordinatesUser = { latitude: 0, longitude: 0 };
+  }
+  console.log(coordinatesUser);
+  const coordinatesZurich = [47.37, 8.54];
+  const coordinatesNewYork = [40.42, 8.54];
+  const coordinatesTokyo = [35.68, 139.74];
+  const coordinatesDubai = [25.21, 55.27];
+  const coordinatesRioDeJaneiro = [-22.91, -43.23];
+  const coordinatesCapeTown = [-33.92, 18.42];
+  const coordinatesLondon = [51.5, -0.11];
+  const coordinatesShangHai = [31.23, 121.47];
+  const coordinatesMexicoCity = [19.43, -99.1389];
+
+  const coordinatesUserLocation = [
+    coordinatesUser.latitude,
+    coordinatesUser.longitude,
+  ];
+  console.log(coordinatesUserLocation);
+  const coordinatesCities = [
+    coordinatesZurich,
+    coordinatesCapeTown,
+    coordinatesDubai,
+    coordinatesLondon,
+    coordinatesMexicoCity,
+    coordinatesNewYork,
+    coordinatesRioDeJaneiro,
+    coordinatesShangHai,
+    coordinatesTokyo,
+  ];
+  coordinatesCities.push(coordinatesUserLocation);
+  console.log(coordinatesCities);
+  let dataCity = [];
+  for (let i = 0; i < coordinatesCities.length; i++) {
+    let urlCities = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinatesCities[i][0]}&lon=${coordinatesCities[i][1]}&appid=682fbde19d8e67b978559f90bac20fcf`;
+    let dataCurrentCity = await getWeatherData(urlCities);
+    let temp = dataCurrentCity.main.temp;
+    let informationCity = {
+      temp: Math.round((temp - 273.15) * 100) / 100,
+      humidity: dataCurrentCity.main.humidity,
+      location: dataCurrentCity.name,
+    };
+    dataCity.push(informationCity);
+  }
+  saveDatatoFile("./src/public/cityData.json", dataCity);
+  res.render("statistics.ejs", { errorStatus: errorStatus });
 });
 app.get("/statistics", (req, res) => {
   res.sendFile(__dirname + "/public/cityData.json");

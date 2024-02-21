@@ -16,6 +16,37 @@
       <a href="/overview"><strong>Overview</strong></a>
     </header>
 
+    <div class="newLocation">
+      <form
+        action="/statistics"
+        method="post"
+        style="display: flex; flex-direction: column"
+      >
+        <div class="input" style="margin-bottom: 10px">
+          <label for="latitudeNewLocation">Latitude of your location</label
+          ><br />
+          <input
+            type="text"
+            id="latitudeNewLocation"
+            name="latitudeNewLocation"
+          />
+        </div>
+        <div class="input">
+          <label for="longitudeNewLocation">Longitude of your location</label
+          ><br />
+          <input
+            type="text"
+            id="longitudeNewLocation"
+            name="longitudeNewLocation"
+          />
+          <br />
+        </div>
+
+        <input type="submit" value="Submit" class="submitButton" />
+        <div class="errorMessage"><%= errorStatus%></div>
+        <p></p>
+      </form>
+    </div>
     <!--Canvas for the Chart-->
     <div class="charts">
       <div class="myChart1"><canvas id="myChart1"></canvas></div>

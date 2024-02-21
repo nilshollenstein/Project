@@ -25,8 +25,11 @@ fetch("./cityData.json")
     console.log(data);
     let locationsList = data.map((item) => item.location);
     for (let i = 0; i < locationsList.length; i++) {
-      locationsList[i] = correctLocationName[i];
+      if (correctLocationName.length < i) {
+        locationsList[i] = correctLocationName[i];
+      }
     }
+
     // Selecting the canvas to draw on it in 2D
     var ctx = document.getElementById("myChart1").getContext("2d");
     // Creating a new chart with data from cityData.json and the context of myChart
