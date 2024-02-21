@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>WeatherWebsite</title>
     <link rel="stylesheet" href="style_overview.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
@@ -26,6 +26,16 @@
         <p>Humidity: <%= data.humidity %> %</p>
       </div>
       <div>
+        <img src="wind.png" />
+        <p>Wind Speed: <%= data.windspeed %> km/h</p>
+      </div>
+    </div>
+    <div class="row3">
+      <div>
+        <img src="sunrise.png" />
+        <p>Sunrise: <%= data.sunrise %></p>
+      </div>
+      <div>
         <!--https://stackoverflow.com/questions/8216918/can-i-use-conditional-statements-with-ejs-templates-in-jmvc-->
         <% if (data.weather === "Clear") { %>
         <img src="/weatherIcons/sun.png" />
@@ -43,13 +53,7 @@
 
         <p>Weather: <%= data.weather %></p>
       </div>
-    </div>
-    <div class="row3">
-      <div class="Sunrise">
-        <img src="sunrise.png" />
-        <p>Sunrise: <%= data.sunrise %></p>
-      </div>
-      <div class="Sunset">
+      <div>
         <img src="sunset.png" />
         <p>Sunset: <%= data.sunset %></p>
       </div>
