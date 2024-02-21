@@ -26,27 +26,11 @@ const { type } = require("os");
 const date = new Date();
 const app = express();
 
-let errorStatus = null;
+let errorStatus;
 
 const port = 3000;
-const jsonPathDailyData = "./src/weatherData.json";
 let url =
   "https://api.openweathermap.org/data/2.5/weather?lat=47&lon=8&appid=682fbde19d8e67b978559f90bac20fcf";
-
-/*********************************************************
- * Functions
- */
-// Quelle: https://sentry.io/answers/how-do-i-test-for-an-empty-javascript-object/
-// Prüft ob ein Array etwas enthält
-function isEmpty(array) {
-  // Durch jedes element im Array iterieren
-  for (let piece in array) {
-    // Wenn im Array  ein Element vorhanden ist, wird false zurückgegeben
-    if (array.hasOwnProperty(piece)) return false;
-  }
-  // Wenn im Array nichts gefunden wurde wird true zurückgegeben
-  return true;
-}
 
 /**********************************************************
  * Backend Code
@@ -77,20 +61,17 @@ app.post("/", (req, res) => {
     coordinates.latitude <= 90 &&
     coordinates.latitude >= -90 &&
     coordinates.longitude <= 180 &&
-    coordinates.longitude >= -180
+    coordinates.longitude >= -180 &&
+    typeof coordinates.latitude === "number" &&
+    typeof coordinates.longitude === "number"
   ) {
     errorStatus = null;
-    res.redirect("/overview");
-  } else if (
-    typeof coordinates.latitude !== "number" ||
-    typeof coordinates.longitude !== "number"
-  ) {
-    errorStatus = "Invalid data type";
-    res.redirect("/");
+    res.redirect("overview");
   } else {
-    errorStatus = "Invalid coordinates";
-    res.redirect("/");
+    errorStatus = "Invalid Coordinates";
+    res.render("index.ejs", { errorStatus: errorStatus });
   }
+  errorStatus = null;
   saveDatatoFile("./src/lat_long.json", coordinates);
 });
 app.get("/", async (req, res) => {
