@@ -1,6 +1,5 @@
 # WeatherWebsite  
 ## Description  
-[Uploading Editing Project_WinterVacations-README.md at master · nilshollenstein-Project_WinterVacations.url…]()
 
 This project is a Monthly Weatherdata collector and Weather Website. It collects weather data based on user-provided coordinates and displays it on a website.  
 
