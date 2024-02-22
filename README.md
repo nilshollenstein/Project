@@ -13,8 +13,13 @@ Make sure to install the following modules using npm:
 - express.js
 - fs
 - path
-- nodemon  
-## How to   
+- nodemon
+## How to use it
+Run 
+``` bash
+   git clone https://github.com/nilshollenstein/Project_WinterVacations.git
+ ```
+## How to run it  
 To run this with nodemon, enter npm test in the Console.  
 To run it with normal node, enter npm start in the console.  
 ## Project Structure  
