@@ -1,13 +1,14 @@
-#WeatherWebsite
-##Description
-This project is a Monthly Weatherdata collector and Weather Website. It collects weather data based on user-provided coordinates and displays it on a website.
+#WeatherWebsite  
+##Description  
 
-##Author
-Nils Hollenstein
-##Version
-1.2
-###Modules
-Make sure to install the following modules using npm:
+This project is a Monthly Weatherdata collector and Weather Website. It collects weather data based on user-provided coordinates and displays it on a website.  
+
+##Author  
+Nils Hollenstein  
+##Version  
+1.2  
+###Modules  
+Make sure to install the following modules using npm:  
 
 - express.js
 - fs
