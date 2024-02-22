@@ -24,8 +24,10 @@ fetch("./cityData.json")
   .then((data) => {
     console.log(data);
     let locationsList = data.map((item) => item.location);
-    for (let i = 0; i < locationsList.length; i++) {
-      if (correctLocationName.length < i) {
+    for (let i = 0; i < correctLocationName.length; i++) {
+      if (locationsList.length <= i) {
+        locationsList.push(correctLocationName[i]);
+      } else {
         locationsList[i] = correctLocationName[i];
       }
     }

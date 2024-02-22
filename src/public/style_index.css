@@ -20,9 +20,12 @@ html {
 } 
 .welcomeText {
 	align-self: center;
-	font-size: 1.3vh;
+	font-size: 2vh;
 	text-wrap: wrap;
 	margin-top: 3%;
+	margin-left: 2%;
+	margin-right: 2%;
+	text-align: center;
 }
 .changeLocation {
 	justify-content: center;
