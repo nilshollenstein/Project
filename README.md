@@ -1,37 +1,37 @@
-#WeatherWebsite  
-##Description  
+# WeatherWebsite  
+## Description  
 
 This project is a Monthly Weatherdata collector and Weather Website. It collects weather data based on user-provided coordinates and displays it on a website.  
 
-##Author  
+## Author  
 Nils Hollenstein  
-##Version  
+## Version  
 1.2  
-###Modules  
+### Modules  
 Make sure to install the following modules using npm:  
 
 - express.js
 - fs
 - path
 - nodemon  
-##How to   
+## How to   
 To run this with nodemon, enter npm test in the Console.  
 To run it with normal node, enter npm start in the console.  
-##Project Structure  
+## Project Structure  
 api.js: Contains functions to fetch weather data from the OpenWeatherMap API.  
 saveData.js: Includes functions to save user-provided coordinates to a file.  
 views directory: Contains HTML templates for different routes (index.ejs, overview.ejs, statistics.ejs).  
 public directory: Includes static files like images and the cityData.json file.  
 style_index.css, style_overview.css, style_statistics.css: CSS files for styling different pages.  
 js_chart.js: JavaScript file for rendering charts using Chart.js.  
-##How to Use  
+## How to Use  
 1. Start by entering the coordinates of the location you want to check on the home page.  
 2. Navigate to the "Overview" page to see the current weather details for the provided coordinates.  
 3. Navigate to the "Statistics" page to compare weather data among different cities, including the one you entered.    
 **Important Note**  
 Make sure to provide valid latitude and longitude values within the specified ranges.  
-###Acknowledgments  
+### Acknowledgments  
 This project uses the OpenWeatherMap API to fetch weather data.  
 Charts are created using the Chart.js library.    
-###Contact    
+### Contact    
 For any inquiries, contact the author Nils Hollenstein.  
