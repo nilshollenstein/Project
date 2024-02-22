@@ -26,8 +26,15 @@ Then Run this command (install node.js i you don't allready have it)
  ```
 
 ## How to run it  
-To run this with nodemon, enter npm test in the Console.  
-To run it with normal node, enter npm start in the console.  
+To run this with nodemon, enter  
+``` bash
+   npm test
+ ```
+in the Console.  
+To run this with nodemon, enter  
+``` bash
+   npm start
+ ``` 
 ## Project Structure  
 - api.js: Contains functions to fetch weather data from the OpenWeatherMap API.  
 - saveData.js: Includes functions to save user-provided coordinates to a file.  
