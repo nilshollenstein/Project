@@ -27,11 +27,11 @@ js_chart.js: JavaScript file for rendering charts using Chart.js.
 ##How to Use  
 1. Start by entering the coordinates of the location you want to check on the home page.  
 2. Navigate to the "Overview" page to see the current weather details for the provided coordinates.  
-3. Navigate to the "Statistics" page to compare weather data among different cities, including the one you entered.  
+3. Navigate to the "Statistics" page to compare weather data among different cities, including the one you entered.    
 **Important Note**  
-Make sure to provide valid latitude and longitude values within the specified ranges.
+Make sure to provide valid latitude and longitude values within the specified ranges.  
 ###Acknowledgments  
 This project uses the OpenWeatherMap API to fetch weather data.  
-Charts are created using the Chart.js library.  
-###Contact  
+Charts are created using the Chart.js library.    
+###Contact    
 For any inquiries, contact the author Nils Hollenstein.  
