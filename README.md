@@ -33,6 +33,6 @@ Make sure to provide valid latitude and longitude values within the specified ra
 ### Acknowledgments  
 - This project uses the OpenWeatherMap API to fetch weather data.  
 - Charts are created using the Chart.js library.
-- The HTML Files work with ejs
+- The HTML files work with ejs
 ### Contact    
 For any inquiries, contact the author Nils Hollenstein.  
