@@ -30,10 +30,11 @@ To run this with nodemon, enter
    npm test
  ```
 in the Console.  
-To run this with nodemon, enter  
+To run this with node, enter  
 ``` bash
    npm start
- ``` 
+ ```
+in the Console
 ## Project Structure  
 - api.js: Contains functions to fetch weather data from the OpenWeatherMap API.  
 - saveData.js: Includes functions to save user-provided coordinates to a file.  
