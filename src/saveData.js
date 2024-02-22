@@ -1,4 +1,21 @@
 /**
+ * Monthly Weatherdata collector and Weather Website
+ *
+ *
+ * @author Nils Hollenstein
+ * @version 1.0
+ * @name saveData
+ * @description This module writes Data to files
+ * @date 22.02.2024
+ *
+ * Needed modules:
+ * fs
+ *
+ * To run this with nodemon enter npm test in the Console
+ * To enter it with  normal node enter npm start in the console
+ */
+
+/**
  * Imports
  */
 const fs = require("fs");

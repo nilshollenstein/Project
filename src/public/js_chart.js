@@ -13,7 +13,7 @@ let correctLocationName = [
 fetch("./cityData.json")
   .then((res) => {
     //https://www.freecodecamp.org/news/how-to-read-json-file-in-javascript/
-    // Check if the network response is successful
+    // Check if the network response is successful(this if is needed, so that the charts aren't empty)
     if (!res.ok) {
       console.error("Network response was not ok");
       return;
@@ -22,7 +22,6 @@ fetch("./cityData.json")
   })
 
   .then((data) => {
-    console.log(data);
     let locationsList = data.map((item) => item.location);
     for (let i = 0; i < correctLocationName.length; i++) {
       if (locationsList.length <= i) {

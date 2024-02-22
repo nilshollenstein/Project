@@ -1,16 +1,23 @@
 /**
  * Monthly Weatherdata collector and Weather Website
  *
- * This program collects weather data based on user-provided coordinates and displays it on a website.
  *
  * @author Nils Hollenstein
- * @version 1.0
+ * @version 1.2
  * @name WeatherWebsite
+ * @description This program collects weather data based on user-provided coordinates and displays it on a website.
+ * @date 22.02.2024
+ *
+ * Needed modules:
+ * express.js
+ * fs
+ * path
+ * nodemon
  *
  * To run this with nodemon enter npm test in the Console
  * To enter it with  normal node enter npm start in the console
  */
-/********************************************************
+/**
  * Imports
  */
 const express = require("express");
@@ -19,20 +26,17 @@ const path = require("path");
 const { getWeatherData } = require("./api");
 const { saveDatatoFile } = require("./saveData");
 
-/********************************************************
- * Instantiation
+/**
+ * Instantiationc
  */
-
-const app = express();
-
 let errorStatusIndex;
 let errorStatusStatistics;
-
+let app = express();
 const port = 3000;
 let url =
   "https://api.openweathermap.org/data/2.5/weather?lat=47&lon=8&appid=682fbde19d8e67b978559f90bac20fcf";
 
-/**********************************************************
+/**
  * Backend Code
  */
 
@@ -172,7 +176,7 @@ app.get("/statistics", async (req, res) => {
     fs.readFileSync("./src/json/coordinatesNewLocation.json", "utf8")
   );
   // Coordinates of predefined cities
-  console.log(coordinatesUser);
+
   const coordinatesZurich = [47.37, 8.54];
   const coordinatesNewYork = [40.42, 8.54];
   const coordinatesTokyo = [35.68, 139.74];
@@ -190,7 +194,6 @@ app.get("/statistics", async (req, res) => {
   ];
 
   // Array of all coordinates (including user's)
-  console.log(coordinatesUserLocation);
   const coordinatesCities = [
     coordinatesZurich,
     coordinatesCapeTown,
@@ -229,6 +232,9 @@ app.get("/statistics", (req, res) => {
   // Send the city data file as response
   res.sendFile(__dirname + "/public/cityData.json");
   res.redirect("/statistics");
+});
+app.use((req, res, next) => {
+  res.status(404).send("Error 404: Site not found");
 });
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
