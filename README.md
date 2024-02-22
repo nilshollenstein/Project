@@ -4,7 +4,7 @@
 This project is a Monthly Weatherdata collector and Weather Website. It collects weather data based on user-provided coordinates and displays it on a website.  
 
 ## Author  
-Nils Hollenstein  
+[Nils Hollenstein](https://github.com/nilshollenstein)
 ## Version  
 1.2  
 ### Modules  
@@ -13,10 +13,28 @@ Make sure to install the following modules using npm:
 - express.js
 - fs
 - path
-- nodemon  
-## How to   
-To run this with nodemon, enter npm test in the Console.  
-To run it with normal node, enter npm start in the console.  
+- nodemon
+## How to use it
+Run this command to clone it
+``` bash
+   git clone https://github.com/nilshollenstein/Project_WinterVacations.git
+ ```  
+Then Run this command (install node.js i you don't allready have it)
+``` bash
+   npm i
+ ```
+
+## How to run it  
+To run this with nodemon, enter  
+``` bash
+   npm test
+ ```
+in the Console.  
+To run this with node, enter  
+``` bash
+   npm start
+ ```
+in the Console
 ## Project Structure  
 - api.js: Contains functions to fetch weather data from the OpenWeatherMap API.  
 - saveData.js: Includes functions to save user-provided coordinates to a file.  
