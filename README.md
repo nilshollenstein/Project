@@ -31,7 +31,8 @@ To run it with normal node, enter npm start in the console.
 **Important Note**  
 Make sure to provide valid latitude and longitude values within the specified ranges.  
 ### Acknowledgments  
-This project uses the OpenWeatherMap API to fetch weather data.  
-Charts are created using the Chart.js library.    
+- This project uses the OpenWeatherMap API to fetch weather data.  
+- Charts are created using the Chart.js library.
+- The HTML Files work with ejs
 ### Contact    
 For any inquiries, contact the author Nils Hollenstein.  
