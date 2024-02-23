@@ -1,12 +1,11 @@
 /**
  * Monthly Weatherdata collector and Weather Website
  *
- *
  * @author Nils Hollenstein
  * @version 1.2
  * @name WeatherWebsite
  * @description This program collects weather data based on user-provided coordinates and displays it on a website.
- * @date 22.02.2024
+ * @date 23.02.2024
  *
  * Needed modules:
  * express.js
@@ -25,7 +24,10 @@ const fs = require("fs");
 const path = require("path");
 const { getWeatherData } = require("./api");
 const { saveDatatoFile } = require("./saveData");
-
+const resetCoordinates = {
+  latitude: 47,
+  longitude: 8,
+};
 /**
  * Instantiationc
  */
@@ -39,7 +41,7 @@ let url =
 /**
  * Backend Code
  */
-
+// 47.257463, 8.694673
 // Parse Request from HTML
 app.use(express.urlencoded({ extended: true }));
 
@@ -238,4 +240,6 @@ app.use((req, res, next) => {
 });
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
+  saveDatatoFile("./src/json/lat_long.json", resetCoordinates);
+  saveDatatoFile("./src/json/coordinatesNewLocation.json", resetCoordinates);
 });
