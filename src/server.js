@@ -32,7 +32,7 @@ const resetCoordinates = {
  * Instantiationc
  */
 let errorStatusIndex;
-let errorStatusStatistics;
+let errorStatusDiagram;
 let app = express();
 const port = 3000;
 let url =
@@ -88,10 +88,10 @@ app.post("/", (req, res) => {
   saveDatatoFile("./src/json/lat_long.json", coordinates);
 });
 
-// Handle POST request for the statistics route
-app.post("/statistics", (req, res) => {
+// Handle POST request for the diagram route
+app.post("/diagram", (req, res) => {
   // Reset the status of the errormessage
-  errorStatusStatistics = null;
+  errorStatusDiagram = null;
 
   // Collect the data from the form
 
@@ -112,22 +112,24 @@ app.post("/statistics", (req, res) => {
     typeof coordinatesNewLocation.latitude === "number" &&
     typeof coordinatesNewLocation.longitude === "number"
   ) {
-    // No errors, save coordinates to file and redirect to statistics
-    errorStatusStatistics = null;
+    // No errors, save coordinates to file and redirect to diagram
+    errorStatusDiagram = null;
     saveDatatoFile(
       "./src/json/coordinatesNewLocation.json",
       coordinatesNewLocation
     );
-    res.redirect("statistics");
+    res.redirect("diagram");
   } else {
-    // Invalid coordinates, redirect to statistics with error status
-    errorStatusStatistics = "Invalid Coordinates";
-    res.redirect("statistics");
+    // Invalid coordinates, redirect to diagram with error status
+    errorStatusDiagram = "Invalid Coordinates";
+    res.redirect("diagram");
   }
 });
 // Handle GET request for the root route
 app.get("/", async (req, res) => {
   // Render index with the error status
+  saveDatatoFile("./src/json/lat_long.json", resetCoordinates);
+  saveDatatoFile("./src/json/coordinatesNewLocation.json", resetCoordinates);
   res.render("index.ejs", { errorStatus: errorStatusIndex });
 });
 
@@ -171,8 +173,8 @@ app.get("/overview", async (req, res) => {
   res.render("overview.ejs", { data: summeryWeather });
 });
 
-// Handle GET request for the statistics route
-app.get("/statistics", async (req, res) => {
+// Handle GET request for the diagram route
+app.get("/diagram", async (req, res) => {
   // Retrieve user coordinates from file
   let coordinatesUser = JSON.parse(
     fs.readFileSync("./src/json/coordinatesNewLocation.json", "utf8")
@@ -226,20 +228,18 @@ app.get("/statistics", async (req, res) => {
 
   // Save city data to file
   saveDatatoFile("./src/public/cityData.json", dataCity);
-  res.render("statistics.ejs", { errorStatus: errorStatusStatistics });
+  res.render("diagram.ejs", { errorStatus: errorStatusDiagram });
 });
 
 // Handle GET request to retrive the city data
-app.get("/statistics", (req, res) => {
+app.get("/diagram", (req, res) => {
   // Send the city data file as response
   res.sendFile(__dirname + "/public/cityData.json");
-  res.redirect("/statistics");
+  res.redirect("diagram");
 });
 app.use((req, res, next) => {
   res.status(404).send("Error 404: Site not found");
 });
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
-  saveDatatoFile("./src/json/lat_long.json", resetCoordinates);
-  saveDatatoFile("./src/json/coordinatesNewLocation.json", resetCoordinates);
 });
