@@ -1,10 +1,7 @@
 /**
- * Monthly Weatherdata collector and Weather Website
- *
  *
  * @author Nils Hollenstein
  * @version 1.0
- * @name saveData
  * @description This module writes Data to files
  * @date 22.02.2024
  *

@@ -1,10 +1,6 @@
 /**
- * Monthly Weatherdata collector and Weather Website
- *
- *
  * @author Nils Hollenstein
  * @version 1.2
- * @name WeatherWebsite
  * @description This Module collects data from API's
  * @date 22.02.2024
  *

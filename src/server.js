@@ -29,7 +29,7 @@ const resetCoordinates = {
   longitude: 8,
 };
 /**
- * Instantiationc
+ * Instantiation
  */
 let errorStatusIndex;
 let errorStatusDiagram;

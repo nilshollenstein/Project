@@ -1,3 +1,13 @@
+/**
+ *
+ * @author Nils Hollenstein
+ * @version 1.3
+ * @description This program uses the Data from cityData.json to display dynamic Charts on the website
+ */
+
+/**
+ * Instantiation
+ */
 let correctLocationName = [
   "Zurich",
   "Cape Town",
@@ -22,6 +32,7 @@ fetch("./cityData.json")
   })
 
   .then((data) => {
+    // Replace the names of the Locations with more understandable names
     let locationsList = data.map((item) => item.location);
     for (let i = 0; i < correctLocationName.length; i++) {
       if (locationsList.length <= i) {
@@ -124,7 +135,7 @@ fetch("./cityData.json")
       },
     });
   })
-
+  // Catch the error if there is one with the fetch
   .catch((error) => {
     console.error("There has been a problem with your fetch operation:", error);
   });
