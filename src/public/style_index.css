@@ -18,15 +18,7 @@ header {
 html {
 	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
 } 
-.welcomeText {
-	align-self: center;
-	font-size: 2vh;
-	text-wrap: wrap;
-	margin-top: 3%;
-	margin-left: 2%;
-	margin-right: 2%;
-	text-align: center;
-}
+
 .changeLocation {
 	justify-content: center;
 	flex-direction: column;
