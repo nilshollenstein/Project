@@ -8,12 +8,12 @@ This project is a Monthly Weatherdata collector and Weather Website. It collects
 ## Version  
 1.2  
 ### Modules  
-Make sure to install the following modules using npm:  
-
+These are the modules you are going to install with npm i:  
 - express.js
 - fs
 - path
 - nodemon
+- axios
 ## How to use it
 Run this command to clone it
 ``` bash
